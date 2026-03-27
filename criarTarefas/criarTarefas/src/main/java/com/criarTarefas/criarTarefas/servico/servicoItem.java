@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.criarTarefas.criarTarefas.modelo.DTO.itemDTO;
 import com.criarTarefas.criarTarefas.modelo.Item;
 import com.criarTarefas.criarTarefas.repositorio.repositorioItem;
-import com.criarTarefas.criarTarefas.repositorio.repositorioTarefa;
 
 @Service
 public class servicoItem {
