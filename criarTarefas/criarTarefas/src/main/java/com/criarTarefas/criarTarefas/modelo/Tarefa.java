@@ -28,6 +28,9 @@ public class Tarefa {
     @Column(nullable = false)
     private String status;
 
+    @Column(nullable=false)
+    private Long ProjetoId;
+
     public Long getId() {
         return id;
     }
@@ -71,4 +74,14 @@ public class Tarefa {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Long getProjetoId(){
+        return ProjetoId;
+    }
+
+    public void setProjetoId(Long ProjetoId){
+        this.ProjetoId = ProjetoId;
+    }
+
+    
 }

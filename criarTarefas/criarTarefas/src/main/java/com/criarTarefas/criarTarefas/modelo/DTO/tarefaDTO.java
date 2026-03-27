@@ -20,6 +20,9 @@ public class tarefaDTO {
     @NotNull(message = "Tempo máximo é obrigatório")
     private Number tempoMaximoMinutos;
 
+    @NotNull(message = "Tempo máximo é obrigatório")
+    private Long ProjetoId;
+
     public String getTitulo() {
         return titulo;
     }
@@ -58,6 +61,10 @@ public class tarefaDTO {
 
     public void setTempoMaximoMinutos(Number tempoMaximoMinutos) {
         this.tempoMaximoMinutos = tempoMaximoMinutos;
+    }
+
+    public Long getProjetoId(){
+        return ProjetoId;
     }
 
 }

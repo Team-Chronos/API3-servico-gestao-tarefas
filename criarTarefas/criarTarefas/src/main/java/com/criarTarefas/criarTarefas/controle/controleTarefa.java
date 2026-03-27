@@ -64,4 +64,11 @@ public class controleTarefa {
         servicoTarefa.deletarTarefa(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/projeto/{projetoId}")
+    public ResponseEntity<List<Tarefa>> listarTarefasPorProjeto(@PathVariable Long projetoId) {
+        List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjeto(projetoId);
+        return ResponseEntity.ok(tarefas);
+    }
+
 }
