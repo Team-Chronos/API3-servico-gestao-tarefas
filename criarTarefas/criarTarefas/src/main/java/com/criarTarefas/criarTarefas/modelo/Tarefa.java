@@ -19,7 +19,7 @@ public class Tarefa {
     @Column(nullable = false)
     private String descricao;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long responsavelId;
 
     @Column(nullable = false)
@@ -28,8 +28,11 @@ public class Tarefa {
     @Column(nullable = false)
     private String status;
 
-    @Column(nullable=false)
-    private Long ProjetoId;
+    @Column(nullable = true)
+    private Long projetoId;
+    
+    @Column(nullable = true)
+    private Long tipoTarefaId;
 
     public Long getId() {
         return id;
@@ -75,13 +78,19 @@ public class Tarefa {
         this.status = status;
     }
 
-    public Long getProjetoId(){
-        return ProjetoId;
+    public Long getProjetoId() {
+        return projetoId;
     }
 
-    public void setProjetoId(Long ProjetoId){
-        this.ProjetoId = ProjetoId;
+    public void setProjetoId(Long projetoId) {
+        this.projetoId = projetoId;
     }
-
     
+    public Long getTipoTarefaId() {
+        return tipoTarefaId;
+    }
+    
+    public void setTipoTarefaId(Long tipoTarefaId) {
+        this.tipoTarefaId = tipoTarefaId;
+    }
 }

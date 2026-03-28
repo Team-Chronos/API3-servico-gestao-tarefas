@@ -23,6 +23,7 @@ public class servicoTarefa {
         tarefa.setTempoMaximoMinutos(dto.getTempoMaximoMinutos());
         tarefa.setStatus(dto.getStatus());
         tarefa.setProjetoId(dto.getProjetoId());
+        tarefa.setTipoTarefaId(dto.getTipoTarefaId());
         
         return repositorioTarefa.save(tarefa);
     }
@@ -32,9 +33,8 @@ public class servicoTarefa {
     }
 
     public List<Tarefa> listarTarefasPorProjeto(Long projetoId) {
-    return repositorioTarefa.findByProjetoId(projetoId);
+        return repositorioTarefa.findByProjetoId(projetoId);
     }
-
 
     public Tarefa buscarTarefaPorId(Long id) {
         return repositorioTarefa.findById(id)
@@ -50,6 +50,7 @@ public class servicoTarefa {
         tarefa.setTempoMaximoMinutos(dto.getTempoMaximoMinutos());
         tarefa.setStatus(dto.getStatus());
         tarefa.setProjetoId(dto.getProjetoId());
+        tarefa.setTipoTarefaId(dto.getTipoTarefaId());
         
         return repositorioTarefa.save(tarefa);
     }

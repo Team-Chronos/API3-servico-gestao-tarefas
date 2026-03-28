@@ -11,7 +11,6 @@ public class tarefaDTO {
     @NotBlank(message = "Descrição não pode estar vazia")
     private String descricao;
 
-    @NotNull(message = "Responsável é necessário")
     private Long responsavelId;
 
     @NotBlank(message = "Status é obrigatório")
@@ -20,8 +19,9 @@ public class tarefaDTO {
     @NotNull(message = "Tempo máximo é obrigatório")
     private Number tempoMaximoMinutos;
 
-    @NotNull(message = "Tempo máximo é obrigatório")
-    private Long ProjetoId;
+    private Long projetoId;
+    
+    private Long tipoTarefaId;
 
     public String getTitulo() {
         return titulo;
@@ -63,8 +63,19 @@ public class tarefaDTO {
         this.tempoMaximoMinutos = tempoMaximoMinutos;
     }
 
-    public Long getProjetoId(){
-        return ProjetoId;
+    public Long getProjetoId() {
+        return projetoId;
     }
 
+    public void setProjetoId(Long projetoId) {
+        this.projetoId = projetoId;
+    }
+    
+    public Long getTipoTarefaId() {
+        return tipoTarefaId;
+    }
+    
+    public void setTipoTarefaId(Long tipoTarefaId) {
+        this.tipoTarefaId = tipoTarefaId;
+    }
 }

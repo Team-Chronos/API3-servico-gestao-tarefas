@@ -9,6 +9,8 @@ public class itemDTO {
     
     @NotBlank(message = "A descrição do item é obrigatória")
     private String descricao;
+    
+    private Long tarefaId;
 
     public String getNome() {
         return nome;
@@ -24,5 +26,13 @@ public class itemDTO {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Long getTarefaId() {
+        return tarefaId;
+    }
+
+    public void setTarefaId(Long tarefaId) {
+        this.tarefaId = tarefaId;
     }
 }

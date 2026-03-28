@@ -14,6 +14,7 @@ public class Item {
 
     private String nome;
     private String descricao;
+    private Long tarefaId;
 
     public Long getId() {
         return id;
@@ -35,4 +36,11 @@ public class Item {
         this.descricao = descricao;
     }
 
+    public Long getTarefaId() {
+        return tarefaId;
+    }
+
+    public void setTarefaId(Long tarefaId) {
+        this.tarefaId = tarefaId;
+    }
 }

@@ -17,11 +17,12 @@ public class servicoItem {
         Item item = new Item();
         item.setNome(dto.getNome());
         item.setDescricao(dto.getDescricao());
+        item.setTarefaId(dto.getTarefaId());
 
         return repositorioItem.save(item);
     }
 
     public Item listarItensPorTarefa(Long tarefaId) {
-    return repositorioItem.findByTarefaId(tarefaId); 
-}
+        return repositorioItem.findByTarefaId(tarefaId);
+    }
 }
