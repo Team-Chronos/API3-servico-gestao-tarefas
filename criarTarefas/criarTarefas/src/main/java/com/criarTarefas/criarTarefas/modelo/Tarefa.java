@@ -11,7 +11,7 @@ public class Tarefa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
     @Column(nullable = false)
     private String titulo;
@@ -34,8 +34,12 @@ public class Tarefa {
     @Column(nullable = true)
     private Long tipoTarefaId;
 
+    @Column(nullable = true)
+    private Long ItemId;
+
+
     public Long getId() {
-        return id;
+        return Id;
     }
 
     public String getTitulo() {
@@ -93,4 +97,13 @@ public class Tarefa {
     public void setTipoTarefaId(Long tipoTarefaId) {
         this.tipoTarefaId = tipoTarefaId;
     }
+
+    public Long getItem() {
+        return ItemId;
+    }
+
+    public void setItem(Long IdItemId){
+        this.ItemId = IdItemId;
+    }
+
 }
