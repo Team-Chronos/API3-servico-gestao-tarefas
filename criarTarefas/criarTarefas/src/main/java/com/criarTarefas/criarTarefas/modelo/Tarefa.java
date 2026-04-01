@@ -1,5 +1,6 @@
 package com.criarTarefas.criarTarefas.modelo;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +12,7 @@ public class Tarefa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false)
     private String titulo;
@@ -23,7 +24,7 @@ public class Tarefa {
     private Long responsavelId;
 
     @Column(nullable = false)
-    private Number tempoMaximoMinutos;
+    private Long tempoMaximoMinutos;
 
     @Column(nullable = false)
     private String status;
@@ -35,11 +36,10 @@ public class Tarefa {
     private Long tipoTarefaId;
 
     @Column(nullable = true)
-    private Long ItemId;
-
+    private Long itemId;
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getTitulo() {
@@ -58,19 +58,19 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
-    public Long getResponsavel() {
+    public Long getResponsavelId() {
         return responsavelId;
     }
 
-    public void setResponsavel(Long responsavel) {
-        this.responsavelId = responsavel;
+    public void setResponsavelId(Long responsavelId) {
+        this.responsavelId = responsavelId;
     }
 
-    public Number getTempoMaximoMinutos() {
+    public Long getTempoMaximoMinutos() {
         return tempoMaximoMinutos;
     }
 
-    public void setTempoMaximoMinutos(Number tempoMaximoMinutos) {
+    public void setTempoMaximoMinutos(Long tempoMaximoMinutos) {
         this.tempoMaximoMinutos = tempoMaximoMinutos;
     }
 
@@ -89,21 +89,20 @@ public class Tarefa {
     public void setProjetoId(Long projetoId) {
         this.projetoId = projetoId;
     }
-    
+
     public Long getTipoTarefaId() {
         return tipoTarefaId;
     }
-    
+
     public void setTipoTarefaId(Long tipoTarefaId) {
         this.tipoTarefaId = tipoTarefaId;
     }
 
-    public Long getItem() {
-        return ItemId;
+    public Long getItemId() {
+        return itemId;
     }
 
-    public void setItem(Long IdItemId){
-        this.ItemId = IdItemId;
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
     }
-
 }

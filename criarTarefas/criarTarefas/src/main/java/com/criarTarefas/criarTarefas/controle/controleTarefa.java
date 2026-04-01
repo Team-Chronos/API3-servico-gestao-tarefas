@@ -67,15 +67,21 @@ public class controleTarefa {
 
     @GetMapping("/projeto/{projetoId}")
     public ResponseEntity<List<Tarefa>> listarTarefasPorProjeto(@PathVariable Long projetoId) {
-    List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjeto(projetoId);
-    return ResponseEntity.ok(tarefas);
+        List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjeto(projetoId);
+        return ResponseEntity.ok(tarefas);
     }
 
     @GetMapping("/responsavel/{id}")
     public ResponseEntity<List<Tarefa>> listarTarefasPorResponsavel(@PathVariable Long id) {
-    List<Tarefa> tarefas = servicoTarefa.listarTarefasPorResponsavel(id);
-    return ResponseEntity.ok(tarefas);
+        List<Tarefa> tarefas = servicoTarefa.listarTarefasPorResponsavel(id);
+        return ResponseEntity.ok(tarefas);
     }
 
-
+    @GetMapping("/projeto/{projetoId}/responsavel/{id}")
+    public ResponseEntity<List<Tarefa>> listarTarefasPorProjetoEResponsavel(
+            @PathVariable Long projetoId, 
+            @PathVariable Long id) {
+        List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjetoEResponsavel(projetoId, id);
+        return ResponseEntity.ok(tarefas);
+    }
 }

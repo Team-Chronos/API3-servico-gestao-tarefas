@@ -1,7 +1,6 @@
 package com.criarTarefas.criarTarefas.modelo.DTO;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class tarefaDTO {
 
@@ -16,8 +15,7 @@ public class tarefaDTO {
     @NotBlank(message = "Status é obrigatório")
     private String status;
 
-    @NotNull(message = "Tempo máximo é obrigatório")
-    private Number tempoMaximoMinutos;
+    private Long tempoMaximoMinutos;
 
     private Long projetoId;
     
@@ -55,11 +53,11 @@ public class tarefaDTO {
         this.status = status;
     }
 
-    public Number getTempoMaximoMinutos() {
+    public Long getTempoMaximoMinutos() {
         return tempoMaximoMinutos;
     }
 
-    public void setTempoMaximoMinutos(Number tempoMaximoMinutos) {
+    public void setTempoMaximoMinutos(Long tempoMaximoMinutos) {
         this.tempoMaximoMinutos = tempoMaximoMinutos;
     }
 
