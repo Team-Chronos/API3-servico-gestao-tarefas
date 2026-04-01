@@ -36,8 +36,12 @@ public class Item {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+    
     public Long getTarefaId() {
         return tarefaId;
     }
-
+    
+    public void setTarefaId(Long tarefaId) {
+        this.tarefaId = tarefaId;
+    }
 }

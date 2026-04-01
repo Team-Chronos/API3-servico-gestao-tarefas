@@ -31,7 +31,10 @@ public class controleItem {
 
     @GetMapping("/tarefa/{tarefaId}")
     public ResponseEntity<Item> listarItensPorTarefa(@PathVariable Long tarefaId) {
-    Item itens = servicoItem.listarItensPorTarefa(tarefaId);
-    return ResponseEntity.ok(itens);
-}
+        Item item = servicoItem.listarItensPorTarefa(tarefaId);
+        if (item != null) {
+            return ResponseEntity.ok(item);
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
