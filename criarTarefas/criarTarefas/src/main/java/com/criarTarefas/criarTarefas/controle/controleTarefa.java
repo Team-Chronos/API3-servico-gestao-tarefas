@@ -1,6 +1,7 @@
 package com.criarTarefas.criarTarefas.controle;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -83,5 +84,16 @@ public class controleTarefa {
             @PathVariable Long id) {
         List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjetoEResponsavel(projetoId, id);
         return ResponseEntity.ok(tarefas);
+    }
+
+    @GetMapping("/responsaveis")
+    public ResponseEntity<List<Long>> listarResponsaveisUnicos() {
+    List<Tarefa> tarefas = servicoTarefa.listarTarefas();
+    List<Long> responsaveis = tarefas.stream()
+        .map(Tarefa::getResponsavelId)
+        .filter(Objects::nonNull)
+        .distinct()
+        .toList();
+    return ResponseEntity.ok(responsaveis);
     }
 }

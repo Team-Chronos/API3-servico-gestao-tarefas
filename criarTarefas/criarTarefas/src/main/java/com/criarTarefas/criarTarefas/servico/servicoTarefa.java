@@ -23,6 +23,7 @@ public class servicoTarefa {
         tarefa.setTempoMaximoMinutos(dto.getTempoMaximoMinutos());
         tarefa.setStatus(dto.getStatus());
         tarefa.setProjetoId(dto.getProjetoId());
+        tarefa.setItemId(dto.getItemId());
         tarefa.setTipoTarefaId(dto.getTipoTarefaId());
         
         return repositorioTarefa.save(tarefa);

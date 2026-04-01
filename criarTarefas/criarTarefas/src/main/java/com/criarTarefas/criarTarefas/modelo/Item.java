@@ -10,15 +10,13 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ItemId;
-    
-    private Long tarefaId;
+    private Long id;
 
     private String nome;
     private String descricao;
 
     public Long getIdItem() {
-        return ItemId;
+        return id;
     }
 
     public String getNome() {
@@ -35,13 +33,5 @@ public class Item {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-    
-    public Long getTarefaId() {
-        return tarefaId;
-    }
-    
-    public void setTarefaId(Long tarefaId) {
-        this.tarefaId = tarefaId;
     }
 }

@@ -1,5 +1,7 @@
 package com.criarTarefas.criarTarefas.controle;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +31,22 @@ public class controleItem {
         return new ResponseEntity<>(itemCriado, HttpStatus.CREATED);
     }
 
-    @GetMapping("/tarefa/{tarefaId}")
-    public ResponseEntity<Item> listarItensPorTarefa(@PathVariable Long tarefaId) {
-        Item item = servicoItem.listarItensPorTarefa(tarefaId);
-        if (item != null) {
-            return ResponseEntity.ok(item);
-        }
-        return ResponseEntity.notFound().build();
+    @GetMapping("/itens/projeto/{projetoId}/responsavel/{responsavelId}")
+    public ResponseEntity<List<Item>> listarItensPorProjetoEResponsavvel(@PathVariable Long projetoId, @PathVariable Long responsavelId) {
+        List<Item> itens = servicoItem.listarItensPorProjetoEResponsavel(projetoId, responsavelId);
+        return ResponseEntity.ok(itens);
     }
+    
+    @GetMapping("/itens/projeto/{projetoId}")
+    public ResponseEntity<List<Item>> listarItensPorProjeto(@PathVariable Long projetoId) {
+        List<Item> itens = servicoItem.listarItensPorProjeto(projetoId);
+        return ResponseEntity.ok(itens);
+    }
+
+    @GetMapping("/itens/tarefa/{tarefaId}")
+    public ResponseEntity<List<Item>> listarItensPorTarefa(@PathVariable Long tarefaId) {
+        List<Item> itens = servicoItem.listarItensPorTarefa(tarefaId);
+        return ResponseEntity.ok(itens);
+    }
+
 }

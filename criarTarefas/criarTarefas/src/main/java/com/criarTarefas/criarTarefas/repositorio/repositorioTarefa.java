@@ -13,7 +13,6 @@ public interface repositorioTarefa extends JpaRepository<Tarefa, Long> {
     List<Tarefa> findByProjetoId(Long projetoId);
     List<Tarefa> findByResponsavelId(Long responsavelId);
     
-    // Método para buscar por projeto e responsável
     List<Tarefa> findByProjetoIdAndResponsavelId(Long projetoId, Long responsavelId);
     
     @Query(value = "SELECT nome FROM projeto WHERE id = :projetoId", nativeQuery = true)

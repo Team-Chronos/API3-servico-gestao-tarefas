@@ -21,6 +21,8 @@ public class tarefaDTO {
     
     private Long tipoTarefaId;
 
+    private Long itemId;
+
     public String getTitulo() {
         return titulo;
     }
@@ -39,6 +41,14 @@ public class tarefaDTO {
 
     public Long getResponsavelId() {
         return responsavelId;
+    }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
+    }
+
+    public Long getItemId() {
+        return itemId;
     }
 
     public void setResponsavelId(Long responsavelId) {
