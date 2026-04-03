@@ -1,11 +1,10 @@
 package com.criarTarefas.criarTarefas.servico;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -83,7 +82,6 @@ public class servicoComunicacaoProjeto {
     
     @GetMapping("/responsaveis")
     public ResponseEntity<?> listarResponsaveisDosProjetos() {
-        System.out.println("=== Listando responsáveis dos projetos ===");
         
         try {
             String url = apiUrl;
