@@ -28,7 +28,7 @@ public class servicoComunicacaoProjeto {
     @Autowired
     private RestTemplate restTemplate;
     
-    @Value("${projeto.api.url:http://localhost:8080/projetos}")
+    @Value("${projeto.api.url:http://localhost:8084/projetos}")
     private String apiUrl;
 
     @GetMapping("/todos")
