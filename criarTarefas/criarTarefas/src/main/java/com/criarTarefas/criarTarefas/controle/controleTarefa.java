@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.criarTarefas.criarTarefas.modelo.DTO.ResumoHorasProjetoDTO;
 import com.criarTarefas.criarTarefas.modelo.DTO.tarefaDTO;
 import com.criarTarefas.criarTarefas.modelo.Tarefa;
+import com.criarTarefas.criarTarefas.servico.servicoHorasProjeto;
 import com.criarTarefas.criarTarefas.servico.servicoTarefa;
 
 import jakarta.validation.Valid;
@@ -29,6 +31,9 @@ public class controleTarefa {
 
     @Autowired
     private servicoTarefa servicoTarefa;
+
+    @Autowired
+    private servicoHorasProjeto servicoHorasProjeto;
 
     @PostMapping
     public ResponseEntity<Tarefa> criarTarefa(@Valid @RequestBody tarefaDTO dto) {
@@ -72,6 +77,12 @@ public class controleTarefa {
         return ResponseEntity.ok(tarefas);
     }
 
+    @GetMapping("/projeto/{projetoId}/horas-estimadas")
+    public ResponseEntity<ResumoHorasProjetoDTO> buscarResumoHorasProjeto(@PathVariable Long projetoId) {
+        ResumoHorasProjetoDTO resumo = servicoHorasProjeto.calcularResumoHorasProjeto(projetoId);
+        return ResponseEntity.ok(resumo);
+    }
+
     @GetMapping("/responsavel/{id}")
     public ResponseEntity<List<Tarefa>> listarTarefasPorResponsavel(@PathVariable Long id) {
         List<Tarefa> tarefas = servicoTarefa.listarTarefasPorResponsavel(id);
@@ -88,12 +99,12 @@ public class controleTarefa {
 
     @GetMapping("/responsaveis")
     public ResponseEntity<List<Long>> listarResponsaveisUnicos() {
-    List<Tarefa> tarefas = servicoTarefa.listarTarefas();
-    List<Long> responsaveis = tarefas.stream()
-        .map(Tarefa::getResponsavelId)
-        .filter(Objects::nonNull)
-        .distinct()
-        .toList();
-    return ResponseEntity.ok(responsaveis);
+        List<Tarefa> tarefas = servicoTarefa.listarTarefas();
+        List<Long> responsaveis = tarefas.stream()
+            .map(Tarefa::getResponsavelId)
+            .filter(Objects::nonNull)
+            .distinct()
+            .toList();
+        return ResponseEntity.ok(responsaveis);
     }
 }
