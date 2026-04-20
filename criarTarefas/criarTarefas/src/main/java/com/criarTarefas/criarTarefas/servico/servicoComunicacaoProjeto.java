@@ -22,7 +22,7 @@ import com.criarTarefas.criarTarefas.modelo.DTO.ConsultaProjetoDTO;
 
 @RestController
 @RequestMapping("/api/projeto")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class servicoComunicacaoProjeto {
 
     @Autowired

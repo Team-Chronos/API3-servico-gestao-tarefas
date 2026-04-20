@@ -19,7 +19,7 @@ import com.criarTarefas.criarTarefas.servico.servicoItem;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class controleItem {
 
     @Autowired
