@@ -8,14 +8,20 @@ import org.springframework.stereotype.Service;
 import com.criarTarefas.criarTarefas.modelo.DTO.tarefaDTO;
 import com.criarTarefas.criarTarefas.modelo.Tarefa;
 import com.criarTarefas.criarTarefas.repositorio.repositorioTarefa;
+import com.criarTarefas.criarTarefas.validacao.validadorLimiteHorasProjeto;
 
 @Service
 public class servicoTarefa {
 
     @Autowired
     private repositorioTarefa repositorioTarefa;
+
+    @Autowired
+    private validadorLimiteHorasProjeto validadorLimiteHorasProjeto;
     
     public Tarefa criarTarefa(tarefaDTO dto) {
+        validadorLimiteHorasProjeto.validarCriacaoTarefa(dto.getProjetoId(), dto.getTempoMaximoMinutos());
+
         Tarefa tarefa = new Tarefa();
         tarefa.setTitulo(dto.getTitulo());
         tarefa.setDescricao(dto.getDescricao());
@@ -51,6 +57,8 @@ public class servicoTarefa {
     }
 
     public Tarefa atualizarTarefa(Long id, tarefaDTO dto) {
+        validadorLimiteHorasProjeto.validarAtualizacaoTarefa(id, dto.getProjetoId(), dto.getTempoMaximoMinutos());
+
         Tarefa tarefa = buscarTarefaPorId(id);
         
         tarefa.setTitulo(dto.getTitulo());

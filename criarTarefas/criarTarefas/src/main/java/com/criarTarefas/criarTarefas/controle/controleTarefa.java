@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.criarTarefas.criarTarefas.modelo.DTO.disponibilidadeProjetoDTO;
 
-import com.criarTarefas.criarTarefas.modelo.DTO.ResumoHorasProjetoDTO;
 import com.criarTarefas.criarTarefas.modelo.DTO.tarefaDTO;
 import com.criarTarefas.criarTarefas.modelo.Tarefa;
-import com.criarTarefas.criarTarefas.servico.servicoHorasProjeto;
+import com.criarTarefas.criarTarefas.servico.servicoDisponibilidadeProjeto;
 import com.criarTarefas.criarTarefas.servico.servicoTarefa;
 
 import jakarta.validation.Valid;
@@ -33,12 +34,12 @@ public class controleTarefa {
     private servicoTarefa servicoTarefa;
 
     @Autowired
-    private servicoHorasProjeto servicoHorasProjeto;
+    private servicoDisponibilidadeProjeto servicoDisponibilidadeProjeto;
 
     @PostMapping
     public ResponseEntity<Tarefa> criarTarefa(@Valid @RequestBody tarefaDTO dto) {
         Tarefa tarefaCriada = servicoTarefa.criarTarefa(dto);
-        return ResponseEntity.ok(tarefaCriada);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tarefaCriada);
     }
 
     @GetMapping
@@ -77,10 +78,10 @@ public class controleTarefa {
         return ResponseEntity.ok(tarefas);
     }
 
-    @GetMapping("/projeto/{projetoId}/horas-estimadas")
-    public ResponseEntity<ResumoHorasProjetoDTO> buscarResumoHorasProjeto(@PathVariable Long projetoId) {
-        ResumoHorasProjetoDTO resumo = servicoHorasProjeto.calcularResumoHorasProjeto(projetoId);
-        return ResponseEntity.ok(resumo);
+    @GetMapping("/projeto/{projetoId}/disponibilidade")
+    public ResponseEntity<disponibilidadeProjetoDTO> buscarDisponibilidadeProjeto(@PathVariable Long projetoId) {
+        disponibilidadeProjetoDTO disponibilidade = servicoDisponibilidadeProjeto.obterDisponibilidadeProjeto(projetoId);
+        return ResponseEntity.ok(disponibilidade);
     }
 
     @GetMapping("/responsavel/{id}")
