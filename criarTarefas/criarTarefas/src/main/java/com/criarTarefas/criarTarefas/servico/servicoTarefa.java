@@ -18,11 +18,10 @@ public class servicoTarefa {
     @Autowired
     private repositorioTarefa repositorioTarefa;
 
-    @CacheEvict(value = {"tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel", "tarefas-projeto-responsavel"}, allEntries = true)
-
     @Autowired
-    private validadorLimiteHorasProjeto validadorLimiteHorasProjeto;
     
+    private validadorLimiteHorasProjeto validadorLimiteHorasProjeto;
+    @CacheEvict(value = {"tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel", "tarefas-projeto-responsavel"}, allEntries = true)
     public Tarefa criarTarefa(tarefaDTO dto) {
         validadorLimiteHorasProjeto.validarCriacaoTarefa(dto.getProjetoId(), dto.getTempoMaximoMinutos());
 
