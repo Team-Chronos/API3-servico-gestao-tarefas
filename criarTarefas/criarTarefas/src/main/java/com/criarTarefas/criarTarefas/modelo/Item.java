@@ -1,5 +1,6 @@
 package com.criarTarefas.criarTarefas.modelo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +16,9 @@ public class Item {
     private String nome;
     private String descricao;
 
+    @Column(name = "tarefa_id", nullable = false)
+    private Long tarefaId;
+
     public Long getIdItem() {
         return id;
     }
@@ -25,7 +29,7 @@ public class Item {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
+    } 
 
     public String getDescricao() {
         return descricao;
@@ -33,5 +37,13 @@ public class Item {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    } 
+
+    public Long getTarefaId() {
+        return tarefaId;
+    }
+
+    public void setTarefaId(Long tarefaId) {
+        this.tarefaId = tarefaId;
     }
 }

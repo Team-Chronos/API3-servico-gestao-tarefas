@@ -22,15 +22,19 @@ public class servicoItem {
     private servicoTarefa servicoTarefa;
 
     public Item criarItem(itemDTO dto) {
+        Tarefa tarefa = servicoTarefa.buscarTarefaPorId(dto.getTarefaId());
+
         Item item = new Item();
         item.setNome(dto.getNome());
         item.setDescricao(dto.getDescricao());
-        return repositorioItem.save(item);
-    };
+        item.setTarefaId(tarefa.getId());
 
-    public Item listarItemPorId(Long id){
+        return repositorioItem.save(item);
+    }
+
+    public Item listarItemPorId(Long id) {
         Item item = repositorioItem.findById(id)
-            .orElseThrow(() -> new RuntimeException("Item não encontrado com ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Item não encontrado com ID: " + id));
 
         return item;
     }
@@ -39,17 +43,17 @@ public class servicoItem {
         List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjeto(projetoId);
 
         List<Item> itens = new ArrayList<>();
-        for (Tarefa tarefa : tarefas){
-            if (tarefa.getItemId() != null){
+        for (Tarefa tarefa : tarefas) {
+            if (tarefa.getItemId() != null) {
                 itens.add(listarItemPorId(tarefa.getItemId()));
             }
         }
         return itens;
     }
-    
+
     public List<Item> listarItensPorTarefa(Long tarefaId) {
         Tarefa tarefa = servicoTarefa.buscarTarefaPorId(tarefaId);
-        
+
         List<Item> itens = new ArrayList<>();
         if (tarefa.getItemId() != null) {
             itens.add(listarItemPorId(tarefa.getItemId()));
@@ -57,19 +61,19 @@ public class servicoItem {
         return itens;
     }
 
-    public List<Item> listarItensPorProjetoEResponsavel(Long projetoId, Long responsavelId){
+    public List<Item> listarItensPorProjetoEResponsavel(Long projetoId, Long responsavelId) {
         List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjeto(projetoId)
-            .stream()
-            .filter(tarefa -> tarefa.getResponsavelId().equals(responsavelId))
-            .toList();
+                .stream()
+                .filter(tarefa -> tarefa.getResponsavelId().equals(responsavelId))
+                .toList();
 
         List<Item> itens = new ArrayList<>();
-        for (Tarefa tarefa : tarefas){
-            if (tarefa.getItemId() != null){
+        for (Tarefa tarefa : tarefas) {
+            if (tarefa.getItemId() != null) {
                 itens.add(listarItemPorId(tarefa.getItemId()));
             }
         }
         return itens;
     }
-    
+
 }
