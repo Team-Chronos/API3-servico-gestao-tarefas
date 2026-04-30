@@ -1,6 +1,7 @@
 package com.criarTarefas.criarTarefas.servico;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,9 +20,11 @@ public class servicoTarefa {
     private repositorioTarefa repositorioTarefa;
 
     @Autowired
-    
+
     private validadorLimiteHorasProjeto validadorLimiteHorasProjeto;
-    @CacheEvict(value = {"tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel", "tarefas-projeto-responsavel"}, allEntries = true)
+
+    @CacheEvict(value = { "tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel",
+            "tarefas-projeto-responsavel" }, allEntries = true)
     public Tarefa criarTarefa(tarefaDTO dto) {
         validadorLimiteHorasProjeto.validarCriacaoTarefa(dto.getProjetoId(), dto.getTempoMaximoMinutos());
 
@@ -60,14 +63,21 @@ public class servicoTarefa {
     @Cacheable(value = "tarefa", key = "#id")
     public Tarefa buscarTarefaPorId(Long id) {
         return repositorioTarefa.findById(id)
-            .orElseThrow(() -> new RuntimeException("Tarefa não encontrada com ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada com ID: " + id));
     }
 
-    @CacheEvict(value = {"tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel", "tarefas-projeto-responsavel"}, allEntries = true)
+    @CacheEvict(value = { "tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel",
+            "tarefas-projeto-responsavel" }, allEntries = true)
     public Tarefa atualizarTarefa(Long id, tarefaDTO dto) {
-        validadorLimiteHorasProjeto.validarAtualizacaoTarefa(id, dto.getProjetoId(), dto.getTempoMaximoMinutos());
-
         Tarefa tarefa = buscarTarefaPorId(id);
+
+        boolean mudouProjeto = !Objects.equals(tarefa.getProjetoId(), dto.getProjetoId());
+        boolean mudouTempo = !Objects.equals(tarefa.getTempoMaximoMinutos(), dto.getTempoMaximoMinutos());
+
+        if (mudouProjeto || mudouTempo) {
+            validadorLimiteHorasProjeto.validarAtualizacaoTarefa(id, dto.getProjetoId(), dto.getTempoMaximoMinutos());
+        }
+
         tarefa.setTitulo(dto.getTitulo());
         tarefa.setDescricao(dto.getDescricao());
         tarefa.setResponsavelId(dto.getResponsavelId());
@@ -79,7 +89,8 @@ public class servicoTarefa {
         return repositorioTarefa.save(tarefa);
     }
 
-    @CacheEvict(value = {"tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel", "tarefas-projeto-responsavel"}, allEntries = true)
+    @CacheEvict(value = { "tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel",
+            "tarefas-projeto-responsavel" }, allEntries = true)
     public Tarefa atualizarStatusTarefa(Long id, String status) {
         Tarefa tarefa = buscarTarefaPorId(id);
         if (status.startsWith("\"") && status.endsWith("\"")) {
@@ -89,7 +100,8 @@ public class servicoTarefa {
         return repositorioTarefa.save(tarefa);
     }
 
-    @CacheEvict(value = {"tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel", "tarefas-projeto-responsavel"}, allEntries = true)
+    @CacheEvict(value = { "tarefas", "tarefa", "tarefas-projeto", "tarefas-responsavel",
+            "tarefas-projeto-responsavel" }, allEntries = true)
     public void deletarTarefa(Long id) {
         Tarefa tarefa = buscarTarefaPorId(id);
         repositorioTarefa.delete(tarefa);
