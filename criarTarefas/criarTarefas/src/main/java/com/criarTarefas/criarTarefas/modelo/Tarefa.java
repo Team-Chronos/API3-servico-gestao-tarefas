@@ -1,14 +1,14 @@
 package com.criarTarefas.criarTarefas.modelo;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public class Tarefa {
+public class Tarefa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class Tarefa {
 
     @Column(nullable = true)
     private Long projetoId;
-    
+
     @Column(nullable = true)
     private Long tipoTarefaId;
 

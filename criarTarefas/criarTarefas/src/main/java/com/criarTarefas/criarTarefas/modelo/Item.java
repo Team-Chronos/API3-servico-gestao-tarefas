@@ -16,34 +16,14 @@ public class Item {
     private String nome;
     private String descricao;
 
-    @Column(name = "tarefa_id", nullable = false)
+    @Column(name = "tarefa_id", nullable = true)
     private Long tarefaId;
 
-    public Long getIdItem() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    } 
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    } 
-
-    public Long getTarefaId() {
-        return tarefaId;
-    }
-
-    public void setTarefaId(Long tarefaId) {
-        this.tarefaId = tarefaId;
-    }
+    public Long getIdItem() { return id; }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public Long getTarefaId() { return tarefaId; }
+    public void setTarefaId(Long tarefaId) { this.tarefaId = tarefaId; }
 }

@@ -7,34 +7,17 @@ public class itemDTO {
 
     @NotBlank(message = "O nome do item é obrigatório")
     private String nome;
-    
+
     @NotBlank(message = "A descrição do item é obrigatória")
     private String descricao;
 
     @NotNull(message = "A tarefa do item é obrigatória")
     private Long tarefaId;
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    } 
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Long getTarefaId() {
-        return tarefaId;
-    }
-
-    public void setTarefaId(Long tarefaId) {
-        this.tarefaId = tarefaId;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+    public Long getTarefaId() { return tarefaId; }
+    public void setTarefaId(Long tarefaId) { this.tarefaId = tarefaId; }
 }

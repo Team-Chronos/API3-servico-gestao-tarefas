@@ -1,16 +1,12 @@
 package com.criarTarefas.criarTarefas.servico;
 
-import java.util.ArrayList;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.criarTarefas.criarTarefas.modelo.DTO.itemDTO;
 import com.criarTarefas.criarTarefas.modelo.Item;
 import com.criarTarefas.criarTarefas.modelo.Tarefa;
 import com.criarTarefas.criarTarefas.repositorio.repositorioItem;
-
-import java.util.List;
 
 @Service
 public class servicoItem {
@@ -23,57 +19,53 @@ public class servicoItem {
 
     public Item criarItem(itemDTO dto) {
         Tarefa tarefa = servicoTarefa.buscarTarefaPorId(dto.getTarefaId());
-
         Item item = new Item();
         item.setNome(dto.getNome());
         item.setDescricao(dto.getDescricao());
         item.setTarefaId(tarefa.getId());
-
         return repositorioItem.save(item);
     }
 
-    public Item listarItemPorId(Long id) {
+    public Item atualizarItem(Long id, itemDTO dto) {
         Item item = repositorioItem.findById(id)
                 .orElseThrow(() -> new RuntimeException("Item não encontrado com ID: " + id));
-
-        return item;
+        item.setNome(dto.getNome());
+        item.setDescricao(dto.getDescricao());
+        return repositorioItem.save(item);
     }
 
-    public List<Item> listarItensPorProjeto(Long projetoId) {
-        List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjeto(projetoId);
-
-        List<Item> itens = new ArrayList<>();
-        for (Tarefa tarefa : tarefas) {
-            if (tarefa.getItemId() != null) {
-                itens.add(listarItemPorId(tarefa.getItemId()));
-            }
+    public void deletarItem(Long id) {
+        if (!repositorioItem.existsById(id)) {
+            throw new RuntimeException("Item não encontrado com ID: " + id);
         }
-        return itens;
+        repositorioItem.deleteById(id);
+    }
+
+    public Item listarItemPorId(Long id) {
+        return repositorioItem.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item não encontrado com ID: " + id));
     }
 
     public List<Item> listarItensPorTarefa(Long tarefaId) {
-        Tarefa tarefa = servicoTarefa.buscarTarefaPorId(tarefaId);
+        return repositorioItem.findByTarefaId(tarefaId);
+    }
 
-        List<Item> itens = new ArrayList<>();
-        if (tarefa.getItemId() != null) {
-            itens.add(listarItemPorId(tarefa.getItemId()));
-        }
-        return itens;
+    public List<Item> listarItensPorProjeto(Long projetoId) {
+        List<Long> tarefaIds = servicoTarefa.listarTarefasPorProjeto(projetoId)
+                .stream()
+                .map(Tarefa::getId)
+                .toList();
+        if (tarefaIds.isEmpty()) return List.of();
+        return repositorioItem.findByTarefaIdIn(tarefaIds);
     }
 
     public List<Item> listarItensPorProjetoEResponsavel(Long projetoId, Long responsavelId) {
-        List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjeto(projetoId)
+        List<Long> tarefaIds = servicoTarefa.listarTarefasPorProjeto(projetoId)
                 .stream()
                 .filter(tarefa -> tarefa.getResponsavelId().equals(responsavelId))
+                .map(Tarefa::getId)
                 .toList();
-
-        List<Item> itens = new ArrayList<>();
-        for (Tarefa tarefa : tarefas) {
-            if (tarefa.getItemId() != null) {
-                itens.add(listarItemPorId(tarefa.getItemId()));
-            }
-        }
-        return itens;
+        if (tarefaIds.isEmpty()) return List.of();
+        return repositorioItem.findByTarefaIdIn(tarefaIds);
     }
-
 }
