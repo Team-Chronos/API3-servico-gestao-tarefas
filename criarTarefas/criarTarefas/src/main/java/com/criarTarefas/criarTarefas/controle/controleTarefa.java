@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.criarTarefas.criarTarefas.modelo.DTO.disponibilidadeProjetoDTO;
 
+import com.criarTarefas.criarTarefas.modelo.DTO.disponibilidadeProjetoDTO;
 import com.criarTarefas.criarTarefas.modelo.DTO.tarefaDTO;
 import com.criarTarefas.criarTarefas.modelo.Tarefa;
 import com.criarTarefas.criarTarefas.servico.servicoDisponibilidadeProjeto;
@@ -55,8 +56,12 @@ public class controleTarefa {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @Valid @RequestBody tarefaDTO dto) {
-        Tarefa tarefaAtualizada = servicoTarefa.atualizarTarefa(id, dto);
+    public ResponseEntity<Tarefa> atualizarTarefa(
+            @PathVariable Long id,
+            @Valid @RequestBody tarefaDTO dto,
+            @RequestHeader(value = "x-user-id", required = false, defaultValue = "0") Long usuarioAutor) {
+        Tarefa tarefaAtualizada = servicoTarefa.atualizarTarefa(id, dto, usuarioAutor);
+        System.out.println("Auditoria: O ID de usuário " + usuarioAutor + " alterou a tarefa " + id);
         return ResponseEntity.ok(tarefaAtualizada);
     }
 
@@ -67,8 +72,11 @@ public class controleTarefa {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarTarefa(@PathVariable Long id) {
-        servicoTarefa.deletarTarefa(id);
+    public ResponseEntity<Void> deletarTarefa(
+            @PathVariable Long id,
+            @RequestHeader(value = "x-user-id", required = false, defaultValue = "0") Long usuarioAutor) {
+        servicoTarefa.deletarTarefa(id, usuarioAutor);
+        System.out.println("Auditoria: O ID de usuário " + usuarioAutor + " deletou a tarefa " + id);
         return ResponseEntity.noContent().build();
     }
 
@@ -80,7 +88,8 @@ public class controleTarefa {
 
     @GetMapping("/projeto/{projetoId}/disponibilidade")
     public ResponseEntity<disponibilidadeProjetoDTO> buscarDisponibilidadeProjeto(@PathVariable Long projetoId) {
-        disponibilidadeProjetoDTO disponibilidade = servicoDisponibilidadeProjeto.obterDisponibilidadeProjeto(projetoId);
+        disponibilidadeProjetoDTO disponibilidade = servicoDisponibilidadeProjeto
+                .obterDisponibilidadeProjeto(projetoId);
         return ResponseEntity.ok(disponibilidade);
     }
 
@@ -92,7 +101,7 @@ public class controleTarefa {
 
     @GetMapping("/projeto/{projetoId}/responsavel/{id}")
     public ResponseEntity<List<Tarefa>> listarTarefasPorProjetoEResponsavel(
-            @PathVariable Long projetoId, 
+            @PathVariable Long projetoId,
             @PathVariable Long id) {
         List<Tarefa> tarefas = servicoTarefa.listarTarefasPorProjetoEResponsavel(projetoId, id);
         return ResponseEntity.ok(tarefas);
@@ -102,10 +111,10 @@ public class controleTarefa {
     public ResponseEntity<List<Long>> listarResponsaveisUnicos() {
         List<Tarefa> tarefas = servicoTarefa.listarTarefas();
         List<Long> responsaveis = tarefas.stream()
-            .map(Tarefa::getResponsavelId)
-            .filter(Objects::nonNull)
-            .distinct()
-            .toList();
+                .map(Tarefa::getResponsavelId)
+                .filter(Objects::nonNull)
+                .distinct()
+                .toList();
         return ResponseEntity.ok(responsaveis);
     }
 }

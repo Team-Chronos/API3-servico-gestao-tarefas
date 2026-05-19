@@ -1,13 +1,16 @@
 package com.criarTarefas.criarTarefas.controle;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.criarTarefas.criarTarefas.modelo.DTO.itemDTO;
 import com.criarTarefas.criarTarefas.modelo.Item;
 import com.criarTarefas.criarTarefas.servico.servicoItem;
+
 import jakarta.validation.Valid;
 
 @RestController
@@ -23,13 +26,18 @@ public class controleItem {
     }
 
     @PutMapping("/itens/{id}")
-    public ResponseEntity<Item> atualizarItem(@PathVariable Long id, @RequestBody @Valid itemDTO itemDTO) {
-        return ResponseEntity.ok(servicoItem.atualizarItem(id, itemDTO));
+    public ResponseEntity<Item> atualizarItem(
+            @PathVariable Long id,
+            @RequestBody @Valid itemDTO itemDTO,
+            @RequestHeader(value = "x-user-id", required = false) Long usuarioAutor) {
+        return ResponseEntity.ok(servicoItem.atualizarItem(id, itemDTO, usuarioAutor));
     }
 
     @DeleteMapping("/itens/{id}")
-    public ResponseEntity<Void> deletarItem(@PathVariable Long id) {
-        servicoItem.deletarItem(id);
+    public ResponseEntity<Void> deletarItem(
+            @PathVariable Long id,
+            @RequestHeader(value = "x-user-id", required = false) Long usuarioAutor) {
+        servicoItem.deletarItem(id, usuarioAutor);
         return ResponseEntity.noContent().build();
     }
 
